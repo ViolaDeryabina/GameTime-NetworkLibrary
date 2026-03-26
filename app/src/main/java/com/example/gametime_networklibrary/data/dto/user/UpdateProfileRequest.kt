@@ -1,4 +1,4 @@
-package com.example.gametime_networklibrary.data.dto
+package com.example.gametime_networklibrary.data.dto.user
 
 data class UpdateProfileRequest(
     val fullName: String,

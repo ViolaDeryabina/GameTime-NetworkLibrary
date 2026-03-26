@@ -1,4 +1,4 @@
-package com.example.gametime_networklibrary.data.dto.registration
+package com.example.gametime_networklibrary.data.dto.user.registration
 
 data class RegistrationRequest(
     val email: String,

@@ -1,22 +1,19 @@
 package com.example.gametime_networklibrary.domain.repository
 
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
-import com.example.gametime_networklibrary.data.dto.UpdateProfileRequest
-import com.example.gametime_networklibrary.data.dto.auth.AuthRequest
-import com.example.gametime_networklibrary.data.dto.auth.AuthResponse
-import com.example.gametime_networklibrary.data.dto.auth.Record
-import com.example.gametime_networklibrary.data.dto.registration.RegistrationRequest
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.Path
+import com.example.gametime_networklibrary.data.dto.user.UpdateProfileRequest
+import com.example.gametime_networklibrary.data.dto.user.auth.AuthRequest
+import com.example.gametime_networklibrary.data.dto.user.auth.AuthResponse
+import com.example.gametime_networklibrary.data.dto.user.auth.Player
+import com.example.gametime_networklibrary.data.dto.user.registration.RegistrationRequest
 
 interface UserRepository {
     suspend fun authorization(authRequest: AuthRequest): NetworkResult<AuthResponse>
-    suspend fun registration(registrationRequest: RegistrationRequest): NetworkResult<Record>
+    suspend fun registration(registrationRequest: RegistrationRequest): NetworkResult<Player>
 
-    suspend fun getInformationProfile(token: String, id: String): NetworkResult<Record>
+    suspend fun getInformationProfile(token: String, id: String): NetworkResult<Player>
 
-    suspend fun updateProfile(token: String, id: String, updateProfileRequest: UpdateProfileRequest): NetworkResult<Record>
+    suspend fun updateProfile(token: String, id: String, updateProfileRequest: UpdateProfileRequest): NetworkResult<Player>
 
 
 

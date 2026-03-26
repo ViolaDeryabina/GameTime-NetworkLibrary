@@ -1,6 +1,6 @@
-package com.example.gametime_networklibrary.data.dto.auth
+package com.example.gametime_networklibrary.data.dto.user.auth
 
-data class Record(
+data class Player(
     val collectionId: String,
     val collectionName: String,
     val id: String,

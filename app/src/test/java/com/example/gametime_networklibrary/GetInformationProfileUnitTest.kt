@@ -2,7 +2,6 @@ package com.example.gametime_networklibrary
 
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
 import com.example.gametime_networklibrary.data.dataSources.service.UserService
-import com.example.gametime_networklibrary.data.dto.auth.AuthRequest
 import com.example.gametime_networklibrary.data.repositoryImpl.UserRepositoryImpl
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
