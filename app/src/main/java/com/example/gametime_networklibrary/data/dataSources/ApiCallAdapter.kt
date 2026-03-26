@@ -1,5 +1,6 @@
 package com.example.gametime_networklibrary.data.dataSources
 
+import android.util.Log
 import com.example.gametime_networklibrary.data.dto.ApiError
 import com.google.gson.Gson
 import retrofit2.HttpException
@@ -17,6 +18,7 @@ object ApiCallAdapter {
             }catch (_: Exception){
                 e.message
             }
+            Log.e("",e.message())
             NetworkResult.Error(e.code(),errorMessage)
         }catch (e: IOException){
             NetworkResult.Exception(e.message)
