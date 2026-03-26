@@ -1,0 +1,81 @@
+package com.example.gametime_networklibrary
+
+import com.example.gametime_networklibrary.data.dataSources.NetworkResult
+import com.example.gametime_networklibrary.data.dataSources.service.UserService
+import com.example.gametime_networklibrary.data.dto.auth.AuthRequest
+import com.example.gametime_networklibrary.data.repositoryImpl.UserRepositoryImpl
+import com.example.gametime_networklibrary.domain.repository.UserRepository
+import junit.framework.TestCase.assertTrue
+import kotlinx.coroutines.test.runTest
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+class AuthUnitTest {
+
+    private lateinit var mockWebServer: MockWebServer
+    private lateinit var userService: UserService
+    private lateinit var userRepository: UserRepositoryImpl
+
+    @Before
+    fun start() {
+        mockWebServer = MockWebServer()
+        mockWebServer.start()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(mockWebServer.url("/"))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        userService = retrofit.create(UserService::class.java)
+        userRepository = UserRepositoryImpl(userService)
+    }
+
+    @After
+    fun stop() {
+        mockWebServer.shutdown()
+    }
+
+    @Test
+    fun AuthUnitTestPositive() = runTest {
+        val jsonResponse = """{
+  "record": {
+    "collectionId": "pbc_3724789644",
+    "collectionName": "players",
+    "created": "2026-03-25 19:22:06.044Z",
+    "email": "user@example.com",
+    "emailVisibility": false,
+    "fullName": "Raisa",
+    "id": "o7zymg6sv8shmgw",
+    "phone": "9484738293737",
+    "photo": "eeba36a2a2d37754bab8b462f4262d97_be4qod5myv.jpg",
+    "updated": "2026-03-25 19:25:52.426Z",
+    "userName": "rai",
+    "verified": false
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJwYmNfMzcyNDc4OTY0NCIsImV4cCI6MTc3NTExMzY2NCwiaWQiOiJvN3p5bWc2c3Y4c2htZ3ciLCJyZWZyZXNoYWJsZSI6dHJ1ZSwidHlwZSI6ImF1dGgifQ.ZPwPr30IgA37du25trBbJVmBDIgV2dRNnyzA3Dlarkc"
+}"""
+
+        val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
+
+        mockWebServer.enqueue(mockResponse)
+
+        val request = AuthRequest("user@example.com", "password")
+        val result = userRepository.authorization(request)
+
+        assertTrue(result is NetworkResult.Success)
+        val data = (result as NetworkResult.Success).data
+
+        assertEquals("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJwYmNfMzcyNDc4OTY0NCIsImV4cCI6MTc3NTExMzY2NCwiaWQiOiJvN3p5bWc2c3Y4c2htZ3ciLCJyZWZyZXNoYWJsZSI6dHJ1ZSwidHlwZSI6ImF1dGgifQ.ZPwPr30IgA37du25trBbJVmBDIgV2dRNnyzA3Dlarkc", data.token)
+
+        assertEquals("o7zymg6sv8shmgw", data.record.id)
+
+    }
+
+}
