@@ -17,4 +17,11 @@ class UserRepositoryImpl(private val api: UserService) : UserRepository {
     override suspend fun registration(registrationRequest: RegistrationRequest): NetworkResult<Record> {
         return ApiCallAdapter.safeApiCall { api.registration(registrationRequest) }
     }
+
+    override suspend fun getInformationProfile(
+        token: String,
+        id: String
+    ): NetworkResult<Record> {
+        return ApiCallAdapter.safeApiCall { api.getInformationProfile("Bearer $token",id) }
+    }
 }
