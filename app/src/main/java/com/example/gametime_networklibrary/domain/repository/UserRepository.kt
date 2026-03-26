@@ -1,6 +1,7 @@
 package com.example.gametime_networklibrary.domain.repository
 
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
+import com.example.gametime_networklibrary.data.dto.UpdateProfileRequest
 import com.example.gametime_networklibrary.data.dto.auth.AuthRequest
 import com.example.gametime_networklibrary.data.dto.auth.AuthResponse
 import com.example.gametime_networklibrary.data.dto.auth.Record
@@ -14,6 +15,9 @@ interface UserRepository {
     suspend fun registration(registrationRequest: RegistrationRequest): NetworkResult<Record>
 
     suspend fun getInformationProfile(token: String, id: String): NetworkResult<Record>
+
+    suspend fun updateProfile(token: String, id: String, updateProfileRequest: UpdateProfileRequest): NetworkResult<Record>
+
 
 
 }

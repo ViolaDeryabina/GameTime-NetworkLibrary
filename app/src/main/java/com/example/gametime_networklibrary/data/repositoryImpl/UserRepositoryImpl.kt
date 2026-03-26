@@ -3,6 +3,7 @@ package com.example.gametime_networklibrary.data.repositoryImpl
 import com.example.gametime_networklibrary.data.dataSources.ApiCallAdapter
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
 import com.example.gametime_networklibrary.data.dataSources.service.UserService
+import com.example.gametime_networklibrary.data.dto.UpdateProfileRequest
 import com.example.gametime_networklibrary.data.dto.auth.AuthRequest
 import com.example.gametime_networklibrary.data.dto.auth.AuthResponse
 import com.example.gametime_networklibrary.data.dto.auth.Record
@@ -22,6 +23,20 @@ class UserRepositoryImpl(private val api: UserService) : UserRepository {
         token: String,
         id: String
     ): NetworkResult<Record> {
-        return ApiCallAdapter.safeApiCall { api.getInformationProfile("Bearer $token",id) }
+        return ApiCallAdapter.safeApiCall { api.getInformationProfile("Bearer $token", id) }
+    }
+
+    override suspend fun updateProfile(
+        token: String,
+        id: String,
+        updateProfileRequest: UpdateProfileRequest
+    ): NetworkResult<Record> {
+        return ApiCallAdapter.safeApiCall {
+            api.updateProfile(
+                "Bearer $token",
+                id,
+                updateProfileRequest
+            )
+        }
     }
 }

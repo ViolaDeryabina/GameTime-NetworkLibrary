@@ -18,7 +18,6 @@ object ApiCallAdapter {
             }catch (_: Exception){
                 e.message
             }
-            Log.e("",e.message())
             NetworkResult.Error(e.code(),errorMessage)
         }catch (e: IOException){
             NetworkResult.Exception(e.message)
