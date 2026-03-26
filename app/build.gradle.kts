@@ -48,6 +48,7 @@ dependencies {
     api(libs.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
     api(libs.logging.interceptor)
+    testImplementation(libs.core.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.mockwebserver)
     testImplementation(libs.kotlinx.coroutines.test)
