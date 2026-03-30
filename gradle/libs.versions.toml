@@ -12,6 +12,8 @@ retrofit = "3.0.0"
 kotlin = "2.3.20"
 runtime = "1.10.6"
 coreKtxVersion = "1.7.0"
+apollo = "4.4.2"
+apolloTest = "0.3.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,7 +30,10 @@ material = { group = "com.google.android.material", name = "material", version.r
 mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "loggingInterceptor" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
+apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime" }
+apollo-mockserver = { module = "com.apollographql.mockserver:apollo-mockserver", version.ref = "apolloTest" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "agp"}
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }

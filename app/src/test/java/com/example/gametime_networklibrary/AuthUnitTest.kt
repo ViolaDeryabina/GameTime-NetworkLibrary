@@ -71,7 +71,10 @@ class AuthUnitTest {
         assertTrue(result is NetworkResult.Success)
         val data = (result as NetworkResult.Success).data
 
-        assertEquals("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJwYmNfMzcyNDc4OTY0NCIsImV4cCI6MTc3NTExMzY2NCwiaWQiOiJvN3p5bWc2c3Y4c2htZ3ciLCJyZWZyZXNoYWJsZSI6dHJ1ZSwidHlwZSI6ImF1dGgifQ.ZPwPr30IgA37du25trBbJVmBDIgV2dRNnyzA3Dlarkc", data.token)
+        assertEquals(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJwYmNfMzcyNDc4OTY0NCIsImV4cCI6MTc3NTExMzY2NCwiaWQiOiJvN3p5bWc2c3Y4c2htZ3ciLCJyZWZyZXNoYWJsZSI6dHJ1ZSwidHlwZSI6ImF1dGgifQ.ZPwPr30IgA37du25trBbJVmBDIgV2dRNnyzA3Dlarkc",
+            data.token
+        )
 
         assertEquals("o7zymg6sv8shmgw", data.record.id)
 

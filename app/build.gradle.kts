@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.apollo)
 }
 
 android {
@@ -39,6 +40,12 @@ android {
     }
 }
 
+apollo {
+    service("service") {
+        packageName.set("com.example.gametime_networklibrary")
+    }
+}
+
 dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.core.ktx)
@@ -48,9 +55,11 @@ dependencies {
     api(libs.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
     api(libs.logging.interceptor)
+    implementation(libs.apollo.runtime)
     testImplementation(libs.core.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.mockwebserver)
+    testImplementation(libs.apollo.mockserver)
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

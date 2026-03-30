@@ -1,0 +1,12 @@
+query GetStatistic{
+    statisticCollection {
+        edges {
+            node {
+                nodeId
+                winimage
+                wincircle
+                total
+            }
+        }
+    }
+}

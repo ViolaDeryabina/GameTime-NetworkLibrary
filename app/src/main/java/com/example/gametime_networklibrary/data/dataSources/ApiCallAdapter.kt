@@ -9,7 +9,7 @@ import java.io.IOException
 object ApiCallAdapter {
     suspend fun <T>safeApiCall(call: suspend ()->T): NetworkResult<T>{
         return try {
-            Log.i("ApiCallAdapter", "Success result")
+            Log.d("ApiCallAdapter", "Success result")
             NetworkResult.Success(call())
         }catch (e: HttpException){
             val errorBody = e.response()?.errorBody()?.toString()
