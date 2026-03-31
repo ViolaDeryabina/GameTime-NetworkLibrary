@@ -1,6 +1,10 @@
 package com.example.gametime_networklibrary.data.dataSources
 
+import com.example.gametime_networklibrary.data.dataSources.service.GameService
+import com.example.gametime_networklibrary.data.dataSources.service.UserService
+import com.example.gametime_networklibrary.data.repositoryImpl.GameRepositoryImpl
 import com.example.gametime_networklibrary.data.repositoryImpl.UserRepositoryImpl
+import com.example.gametime_networklibrary.domain.repository.GameRepository
 import com.example.gametime_networklibrary.domain.repository.UserRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,5 +27,11 @@ object NetworkService {
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
         .build()
+
+    private val userService = retrofit.create(UserService::class.java)
+    private val gameService = retrofit.create(GameService::class.java)
+
+    val userRepository = UserRepositoryImpl(userService)
+    val gameRepository = GameRepositoryImpl(gameService)
 
 }

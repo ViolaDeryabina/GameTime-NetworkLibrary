@@ -14,7 +14,11 @@ class ApolloRepositoryImpl(val apolloClient: ApolloClient) : ApolloRepository {
         return ApolloCallAdapter.safeApiCall(
             call = {
                 apolloClient.query(GetStatisticQuery())
-                    .httpHeaders(listOf(HttpHeader("Authorization", "Bearer $token"))).execute()
+                    .httpHeaders(listOf(
+                        HttpHeader("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pZG1ocXB4cHRmeWp2a2VqbWF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4ODU0NjgsImV4cCI6MjA5MDQ2MTQ2OH0.zsXilXjE9eRLlbYUSzGcMUHRFwQRR_bgtghYyduZh_g"),
+                        HttpHeader("Authorisation", "Bearer $token"),
+                        ))
+                    .execute()
             },
             mapper = { it.toDomain() }
         )
