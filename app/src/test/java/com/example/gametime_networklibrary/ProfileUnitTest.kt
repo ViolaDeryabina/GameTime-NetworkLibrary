@@ -1,8 +1,8 @@
 package com.example.gametime_networklibrary
 
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
-import com.example.gametime_networklibrary.data.dataSources.service.UserService
-import com.example.gametime_networklibrary.data.repositoryImpl.UserRepositoryImpl
+import com.example.gametime_networklibrary.data.dataSources.service.ProfileService
+import com.example.gametime_networklibrary.data.repositoryImpl.ProfileRepositoryImpl
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
@@ -14,10 +14,10 @@ import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class GetInformationProfileUnitTest {
+class ProfileUnitTest {
     private lateinit var mockWebServer: MockWebServer
-    private lateinit var userService: UserService
-    private lateinit var userRepository: UserRepositoryImpl
+    private lateinit var profileService: ProfileService
+    private lateinit var profileRepository: ProfileRepositoryImpl
 
     @Before
     fun start() {
@@ -29,8 +29,8 @@ class GetInformationProfileUnitTest {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        userService = retrofit.create(UserService::class.java)
-        userRepository = UserRepositoryImpl(userService)
+        profileService = retrofit.create(ProfileService::class.java)
+        profileRepository = ProfileRepositoryImpl(profileService)
     }
 
     @After
@@ -41,30 +41,29 @@ class GetInformationProfileUnitTest {
     @Test
     fun AuthUnitTestPositive() = runTest {
         val jsonResponse = """{
-  "collectionId": "pbc_3724789644",
-  "collectionName": "players",
-  "created": "2026-03-25 19:22:06.044Z",
-  "email": "user@example.com",
-  "emailVisibility": false,
-  "fullName": "Raisa",
-  "id": "o7zymg6sv8shmgw",
-  "phone": "9484738293737",
-  "photo": "eeba36a2a2d37754bab8b462f4262d97_be4qod5myv.jpg",
-  "updated": "2026-03-25 19:25:52.426Z",
-  "userName": "rai",
-  "verified": false
+  "id": 1,
+  "name": "Иван Иванов",
+  "email": "ivan@example.com",
+  "avatar": "https://game2026.skillmad.ru/storage/avatars/s7MOoWqWkmOxwMaYrdHyQsTMyU9dhzDoOTogZLKW.png",
+  "email_verified_at": "2026-04-21T08:50:38.126Z",
+  "created_at": "2026-04-21T08:50:38.126Z",
+  "updated_at": "2026-04-21T08:50:38.126Z",
+  "is_online": true
 }"""
 
         val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
 
         mockWebServer.enqueue(mockResponse)
 
-        val result = userRepository.getInformationProfile("JWT_Token","o7zymg6sv8shmgw")
+        val result = profileRepository.getProfile("JWT_Token")
 
         assertTrue(result is NetworkResult.Success)
         val data = (result as NetworkResult.Success).data
 
 
-        assertEquals("o7zymg6sv8shmgw", data.id)
+        assertEquals(1, data.id)
+        val res = mockWebServer.takeRequest()
+        assertEquals("/profile", res.path)
+        assertEquals("Bearer JWT_Token", res.headers["Authorization"])
     }
 }

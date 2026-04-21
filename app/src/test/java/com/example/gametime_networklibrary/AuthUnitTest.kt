@@ -2,7 +2,7 @@ package com.example.gametime_networklibrary
 
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
 import com.example.gametime_networklibrary.data.dataSources.service.UserService
-import com.example.gametime_networklibrary.data.dto.user.auth.AuthRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.AuthRequest
 import com.example.gametime_networklibrary.data.repositoryImpl.UserRepositoryImpl
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
@@ -44,28 +44,28 @@ class AuthUnitTest {
     @Test
     fun AuthUnitTestPositive() = runTest {
         val jsonResponse = """{
-  "record": {
-    "collectionId": "pbc_3724789644",
-    "collectionName": "players",
-    "created": "2026-03-25 19:22:06.044Z",
-    "email": "user@example.com",
-    "emailVisibility": false,
-    "fullName": "Raisa",
-    "id": "o7zymg6sv8shmgw",
-    "phone": "9484738293737",
-    "photo": "eeba36a2a2d37754bab8b462f4262d97_be4qod5myv.jpg",
-    "updated": "2026-03-25 19:25:52.426Z",
-    "userName": "rai",
-    "verified": false
+  "message": "Вход выполнен успешно",
+  "user": {
+    "id": 362,
+    "name": "Иван Иванов",
+    "email": "useruser@example.com",
+    "email_verified_at": null,
+    "created_at": "2026-04-21T06:02:31.000000Z",
+    "updated_at": "2026-04-21T06:02:31.000000Z",
+    "avatar": null,
+    "firstname": "Иван",
+    "lastname": "Иванов",
+    "phone": "+79991234567",
+    "is_online": false
   },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJwYmNfMzcyNDc4OTY0NCIsImV4cCI6MTc3NTExMzY2NCwiaWQiOiJvN3p5bWc2c3Y4c2htZ3ciLCJyZWZyZXNoYWJsZSI6dHJ1ZSwidHlwZSI6ImF1dGgifQ.ZPwPr30IgA37du25trBbJVmBDIgV2dRNnyzA3Dlarkc"
+  "token": "862|04cNYW7SugLAWl8k3Z3WSWIQx9SLy7D3WLtlBop6ee662270"
 }"""
 
         val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
 
         mockWebServer.enqueue(mockResponse)
 
-        val request = AuthRequest("user@example.com", "password")
+        val request = AuthRequest("useruser@example.com", "password")
         val result = userRepository.authorization(request)
 
         assertTrue(result is NetworkResult.Success)
@@ -76,7 +76,6 @@ class AuthUnitTest {
             data.token
         )
 
-        assertEquals("o7zymg6sv8shmgw", data.record.id)
 
     }
 

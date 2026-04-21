@@ -2,7 +2,7 @@ package com.example.gametime_networklibrary
 
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
 import com.example.gametime_networklibrary.data.dataSources.service.UserService
-import com.example.gametime_networklibrary.data.dto.user.registration.RegistrationRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.RegisterRequest
 import com.example.gametime_networklibrary.data.repositoryImpl.UserRepositoryImpl
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
@@ -42,30 +42,47 @@ class RegistrationUnitTest {
     @Test
     fun AuthUnitTestPositive() = runTest {
         val jsonResponse = """{
-  "collectionId": "pbc_3724789644",
-  "collectionName": "players",
-  "created": "2026-03-26 07:24:22.034Z",
-  "emailVisibility": false,
-  "fullName": "test",
-  "id": "4c2vymvnep7h8yl",
-  "phone": "test",
-  "photo": "",
-  "updated": "2026-03-26 07:24:22.034Z",
-  "userName": "test",
-  "verified": false
+  "message": "Пользователь успешно зарегистрирован",
+  "user": {
+    "name": "Виолетта",
+    "email": "violaDer@gmail.com",
+    "firstname": "Violetta",
+    "lastname": "Deryabina",
+    "phone": "+79201234556",
+    "updated_at": "2026-04-21T06:02:31.000000Z",
+    "created_at": "2026-04-21T06:02:31.000000Z",
+    "id": 362,
+    "is_online": false
+  },
+  "token": "860|P2aHGMWcTbobtdvyyktIpbfUTadTmMlNxA6dQBSDc6b0ea5c"
 }"""
 
         val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
 
         mockWebServer.enqueue(mockResponse)
 
-        val request = RegistrationRequest("viola@test.ru", "password", "password","test", "test", "test")
+        val request = RegisterRequest(
+            "Виолетта",
+            "violaDer@gmail.com",
+            "password",
+            "password",
+            "Violetta",
+            "Deryabina",
+            phone = "+79201234556"
+        )
+
         val result = userRepository.registration(request)
 
         assertTrue(result is NetworkResult.Success)
-        val data = (result as NetworkResult.Success).data
 
-        assertEquals("4c2vymvnep7h8yl", data.id)
-        assertEquals("test", data.userName)
+        val data = (result as NetworkResult.Success).data
+        assertEquals("Виолетта", data.user.name)
+        assertEquals("violaDer@gmail.com", data.user.email)
+        assertEquals(false, data.user.is_online)
+
+        val res = mockWebServer.takeRequest()
+        assertEquals("/register", res.path)
+
+        //assertEquals("Bearer secret-token", res.headers["Authorization"])
     }
 }

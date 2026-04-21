@@ -3,45 +3,23 @@ package com.example.gametime_networklibrary.data.repositoryImpl
 import com.example.gametime_networklibrary.data.dataSources.ApiCallAdapter
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
 import com.example.gametime_networklibrary.data.dataSources.service.UserService
-import com.example.gametime_networklibrary.data.dto.user.UpdateProfileRequest
-import com.example.gametime_networklibrary.data.dto.user.auth.AuthRequest
-import com.example.gametime_networklibrary.data.dto.user.auth.AuthResponse
-import com.example.gametime_networklibrary.data.dto.user.auth.Player
-import com.example.gametime_networklibrary.data.dto.user.registration.RegistrationRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.Logout
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.RegisterRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.RegisterResponse
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.AuthRequest
 import com.example.gametime_networklibrary.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val api: UserService) : UserRepository {
 
-    override suspend fun authorization(authRequest: AuthRequest): NetworkResult<AuthResponse> {
+    override suspend fun authorization(authRequest: AuthRequest): NetworkResult<RegisterResponse> {
         return ApiCallAdapter.safeApiCall { api.authorization(authRequest) }
     }
 
-    override suspend fun registration(registrationRequest: RegistrationRequest): NetworkResult<Player> {
-        return ApiCallAdapter.safeApiCall { api.registration(registrationRequest) }
+    override suspend fun registration(registerRequest: RegisterRequest): NetworkResult<RegisterResponse> {
+        return ApiCallAdapter.safeApiCall { api.registration(registerRequest) }
     }
 
-    override suspend fun getInformationProfile(
-        token: String,
-        id: String
-    ): NetworkResult<Player> {
-        return ApiCallAdapter.safeApiCall { api.getInformationProfile("Bearer $token", id) }
+    override suspend fun logout(token: String): NetworkResult<Logout> {
+        return ApiCallAdapter.safeApiCall { api.logout("Bearer $token") }
     }
-
-    override suspend fun updateProfile(
-        token: String,
-        id: String,
-        updateProfileRequest: UpdateProfileRequest
-    ): NetworkResult<Player> {
-        return ApiCallAdapter.safeApiCall {
-            api.updateProfile(
-                "Bearer $token",
-                id,
-                updateProfileRequest
-            )
-        }
-    }
-
-
-
-
 }

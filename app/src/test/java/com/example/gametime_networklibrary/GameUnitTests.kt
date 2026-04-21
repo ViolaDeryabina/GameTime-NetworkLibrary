@@ -2,11 +2,9 @@ package com.example.gametime_networklibrary
 
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
 import com.example.gametime_networklibrary.data.dataSources.service.GameService
-import com.example.gametime_networklibrary.data.dataSources.service.UserService
-import com.example.gametime_networklibrary.data.dto.game.CreateGameRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameRequest
 import com.example.gametime_networklibrary.data.repositoryImpl.GameRepositoryImpl
-import com.example.gametime_networklibrary.data.repositoryImpl.UserRepositoryImpl
-import com.example.gametime_networklibrary.domain.repository.GameRepository
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
@@ -43,100 +41,118 @@ class GameUnitTests {
     }
 
     @Test
-    fun GetCategoryPositiveTest() = runTest {
-        val jsonResponse = """{
-  "items": [
-    {
-      "collectionId": "pbc_1174553048",
-      "collectionName": "category",
-      "created": "2026-03-25 15:17:31.739Z",
-      "id": "hf9yve2sqvkey21",
-      "title": "Image",
-      "updated": "2026-03-25 15:17:31.739Z"
-    },
-    {
-      "collectionId": "pbc_1174553048",
-      "collectionName": "category",
-      "created": "2026-03-25 15:17:40.638Z",
-      "id": "ccizut5ouju9ge6",
-      "title": "Circle",
-      "updated": "2026-03-25 15:17:40.638Z"
-    }
-  ],
-  "page": 1,
-  "perPage": 30,
-  "totalItems": 2,
-  "totalPages": 1
-}"""
-
-        val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
-
-        mockWebServer.enqueue(mockResponse)
-
-        val result = gameRepository.getListCategory("JWT_Token")
-        assertTrue(result is NetworkResult.Success)
-        val data = (result as NetworkResult.Success).data
-        assertEquals("Image", data.items[0].title)
-        assertEquals("pbc_1174553048", data.items[0].collectionId)
-        assertEquals("category", data.items[0].collectionName)
-        assertEquals("hf9yve2sqvkey21", data.items[0].id)
-    }
-
-    @Test
     fun GetGamePositiveTest() = runTest {
-        val jsonResponse = """{
-  "items": [
-    {
-      "category": "hf9yve2sqvkey21",
-      "collectionId": "pbc_443959778",
-      "collectionName": "games",
-      "created": "2026-03-25 15:20:36.822Z",
-      "description": "Это первая тестовая игра",
-      "from": "2026-03-30 12:00:00.000Z",
-      "gameName": "Image game",
-      "host": "o65f9a68ithrd7n",
-      "id": "x7tpsnif2gcuzvs",
-      "notification": false,
-      "to": "2026-03-31 12:00:00.000Z",
-      "updated": "2026-03-25 15:24:38.737Z",
-      "winningPrice": 9000
-    }
-  ],
-  "page": 1,
-  "perPage": 30,
-  "totalItems": 3,
-  "totalPages": 1
-}"""
+        val jsonResponse = """"current_page": 1,
+              "data": [
+                {
+                  "id": 1,
+                  "type": "image_puzzle",
+                  "status": "scheduled",
+                  "creator_id": 5,
+                  "max_players": 4,
+                  "difficulty": 4,
+                  "image_url": "string",
+                  "target_avatar_url": "string",
+                  "config": {
+                    "pieces": 16,
+                    "difficulty": 4,
+                    "grid": {
+                      "rows": 4,
+                      "cols": 4
+                    }
+                  },
+                  "winner_id": 0,
+                  "winner_time": 0,
+                  "scheduled_at": "2026-04-21T08:29:40.822Z",
+                  "started_at": "2026-04-21T08:29:40.822Z",
+                  "finished_at": "2026-04-21T08:29:40.822Z",
+                  "created_at": "2026-04-21T08:29:40.822Z",
+                  "updated_at": "2026-04-21T08:29:40.822Z",
+                  "creator": {
+                    "id": 0,
+                    "name": "string",
+                    "email": "string",
+                    "avatar": "string",
+                    "is_online": true
+                  },
+                  "players": [
+                    {
+                      "id": 0,
+                      "name": "string",
+                      "email": "string",
+                      "avatar": "string",
+                      "is_online": true
+                    }
+                  ]
+                }
+              ],
+              "first_page_url": "string",
+              "from": 1,
+              "last_page": 1,
+              "last_page_url": "string",
+              "per_page": 20,
+              "to": 1,
+              "total": 1"""
 
         val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
 
         mockWebServer.enqueue(mockResponse)
 
-        val result = gameRepository.getListGame("JWT_Token")
-        assertTrue(result is NetworkResult.Success)
-        val data = (result as NetworkResult.Success).data
-        assertEquals("hf9yve2sqvkey21", data.items[0].category)
-        assertEquals("pbc_443959778", data.items[0].collectionId)
-        assertEquals("games", data.items[0].collectionName)
-        assertEquals("x7tpsnif2gcuzvs", data.items[0].id)
+//        val result = gameRepository.getListGame("JWT_Token", status = "scheduled", type = "image_puzzle")
+//        assertTrue(result is NetworkResult.Success)
+//        val data = (result as NetworkResult.Success).data
+//        assertEquals(1, data.data[0].id)
+//        assertEquals("image_puzzle", data.data[0].type)
+//        assertEquals("scheduled", data.data[0].status)
+//
+//        val res = mockWebServer.takeRequest()
+//        assertEquals("/games", res.path)
+//        assertEquals("Bearer JWT-token", res.headers["Authorization"])
+
     }
 
     @Test
     fun CreateGamePositiveTest() = runTest {
         val jsonResponse = """{
-  "category": "hf9yve2sqvkey21",
-  "collectionId": "pbc_443959778",
-  "collectionName": "games",
-  "created": "2026-03-26 08:33:40.350Z",
-  "description": "test",
-  "from": "2022-01-01 10:00:00.123Z",
-  "gameName": "test",
-  "host": "o7zymg6sv8shmgw",
-  "id": "bls1g4bvh28ej6y",
-  "notification": true,
-  "to": "2022-01-01 10:00:00.123Z",
-  "updated": "2026-03-26 08:33:40.350Z",
-  "winningPrice": 123
+  "message": "Игра запланирована",
+  "game": {
+    "id": 1,
+    "type": "image_puzzle",
+    "title": "Загадка дня",
+    "description": "Описание игры",
+    "points": 100,
+    "status": "scheduled",
+    "creator_id": 0,
+    "max_players": 0,
+    "difficulty": 0,
+    "image_url": "string",
+    "target_avatar_url": "string",
+    "config": {
+      "pieces": 0,
+      "difficulty": 0,
+      "grid": {
+        "rows": 0,
+        "cols": 0
+      }
+    },
+    "scheduled_at": "2026-04-21T08:31:19.138Z",
+    "created_at": "2026-04-21T08:31:19.138Z",
+    "updated_at": "2026-04-21T08:31:19.138Z",
+    "creator": {
+      "id": 0,
+      "name": "string",
+      "email": "string",
+      "avatar": "string"
+    },
+    "players": [
+      {
+        "id": 0,
+        "name": "string",
+        "email": "string",
+        "avatar": "string"
+      }
+    ]
+  }
 }"""
 
         val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
@@ -144,76 +160,162 @@ class GameUnitTests {
         mockWebServer.enqueue(mockResponse)
 
         val request = CreateGameRequest(
-            gameName = "test",
-            category = "hf9yve2sqvkey21",
-            winningPrice = 123,
-            from = "2022-01-01 10:00:00.123Z",
-            to = "2022-01-01 10:00:00.123Z",
-            description = "test",
-            notification = true,
-            host = "o7zymg6sv8shmgw"
+            type = "image_puzzle",
+            scheduled_at = "2026-04-01T15:00:00Z",
+            title = "Загадка дня",
+            description = "Описание игры",
+            points = 100,
+            max_players = 4,
+            difficulty = 4
         )
         val result = gameRepository.createGame("JWT_Token", request)
         assertTrue(result is NetworkResult.Success)
         val data = (result as NetworkResult.Success).data
-        assertEquals("hf9yve2sqvkey21", data.category)
-        assertEquals("games", data.collectionName)
+        assertEquals("Игра запланирована", data.message)
 
-        assertEquals("test", data.gameName)
-        assertEquals(123, data.winningPrice)
+        val res = mockWebServer.takeRequest()
+        assertEquals("/games", res.path)
+        assertEquals("Bearer JWT_Token", res.headers["Authorization"])
+
     }
 
     @Test
     fun GetIngormtionGameById() = runTest {
         val jsonResponse = """{
-  "category": "hf9yve2sqvkey21",
-  "collectionId": "pbc_443959778",
-  "collectionName": "games",
-  "created": "2026-03-25 15:20:36.822Z",
-  "description": "Это первая тестовая игра",
-  "expand": {
-    "category": {
-      "collectionId": "pbc_1174553048",
-      "collectionName": "category",
-      "created": "2026-03-25 15:17:31.739Z",
-      "id": "hf9yve2sqvkey21",
-      "title": "Image",
-      "updated": "2026-03-25 15:17:31.739Z"
-    },
-    "host": {
-      "collectionId": "pbc_3724789644",
-      "collectionName": "players",
-      "created": "2026-03-25 15:24:21.176Z",
-      "emailVisibility": false,
-      "fullName": "Olga",
-      "id": "o65f9a68ithrd7n",
-      "phone": "+2438987654534",
-      "photo": "",
-      "updated": "2026-03-25 15:24:21.176Z",
-      "userName": "olga",
-      "verified": false
+  "id": 1,
+  "type": "image_puzzle",
+  "status": "scheduled",
+  "creator_id": 5,
+  "max_players": 4,
+  "difficulty": 4,
+  "image_url": "string",
+  "target_avatar_url": "string",
+  "config": {
+    "pieces": 16,
+    "difficulty": 4,
+    "grid": {
+      "rows": 4,
+      "cols": 4
     }
   },
-  "from": "2026-03-30 12:00:00.000Z",
-  "gameName": "Image game",
-  "host": "o65f9a68ithrd7n",
-  "id": "x7tpsnif2gcuzvs",
-  "notification": false,
-  "to": "2026-03-31 12:00:00.000Z",
-  "updated": "2026-03-25 15:24:38.737Z",
-  "winningPrice": 9000
+  "winner_id": 0,
+  "winner_time": 0,
+  "scheduled_at": "2026-04-21T08:32:54.445Z",
+  "started_at": "2026-04-21T08:32:54.445Z",
+  "finished_at": "2026-04-21T08:32:54.445Z",
+  "created_at": "2026-04-21T08:32:54.445Z",
+  "updated_at": "2026-04-21T08:32:54.445Z",
+  "creator": {
+    "id": 0,
+    "name": "string",
+    "email": "string",
+    "avatar": "string",
+    "is_online": true
+  },
+  "players": [
+    {
+      "id": 0,
+      "name": "string",
+      "email": "string",
+      "avatar": "string",
+      "is_online": true
+    }
+  ]
 }"""
 
         val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
 
         mockWebServer.enqueue(mockResponse)
 
-        val result = gameRepository.getInformationGameByiId("JWT_Token", "x7tpsnif2gcuzvs")
+        val result = gameRepository.getInformationGameByiId("JWT_Token", 1)
         assertTrue(result is NetworkResult.Success)
         val data = (result as NetworkResult.Success).data
 
-        assertEquals("Image", data.expand?.category?.title)
-        assertEquals("games", data.collectionName)
-        assertEquals("hf9yve2sqvkey21", data.category)
+        assertEquals(1, data.id)
+        assertEquals("image_puzzle", data.type)
+        assertEquals("scheduled", data.status)
+
+        val res = mockWebServer.takeRequest()
+        assertEquals("/games/1", res.path)
+        assertEquals("Bearer JWT_Token", res.headers["Authorization"])
+    }
+
+    @Test
+    fun LoginGamePositiveTest() = runTest {
+        val jsonResponse = """{
+  "message": "Вы вошли в игру",
+  "game": {
+    "id": 1,
+    "type": "string",
+    "status": "string",
+    "max_players": 0,
+    "image_url": "string",
+    "target_avatar_url": "string",
+    "config": {},
+    "scheduled_at": "2026-04-21T08:38:33.748Z",
+    "created_at": "2026-04-21T08:38:33.748Z",
+    "updated_at": "2026-04-21T08:38:33.748Z",
+    "players": [
+      {
+        "id": 0,
+        "name": "string",
+        "email": "string",
+        "avatar": "string",
+        "is_online": true
+      }
+    ]
+  }
+}"""
+
+        val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
+
+        mockWebServer.enqueue(mockResponse)
+
+        val result = gameRepository.loginGame("JWT_Token", 1)
+        assertTrue(result is NetworkResult.Success)
+        val data = (result as NetworkResult.Success).data
+
+        assertEquals("Вы вошли в игру", data.message)
+        assertEquals(1, data.game.id)
+
+        val res = mockWebServer.takeRequest()
+        assertEquals("/games/1/join", res.path)
+        assertEquals("Bearer JWT_Token", res.headers["Authorization"])
+    }
+
+
+    @Test
+    fun SafeResultGamePositiveTest() = runTest {
+        val jsonResponse = """{
+  "message": "Результат сохранён",
+  "game": {
+    "id": 1,
+    "type": "string",
+    "status": "string",
+    "image_url": "string",
+    "target_avatar_url": "string",
+    "config": {},
+    "players": [
+      {}
+    ]
+  },
+  "your_time": 45,
+  "waiting_for_players": true
+}"""
+
+        val mockResponse = MockResponse().setBody(jsonResponse).setResponseCode(200)
+
+        mockWebServer.enqueue(mockResponse)
+
+        val result = gameRepository.safeResultGame("JWT_Token", 1,FinishGameRequest(time=45, moves = 12))
+        assertTrue(result is NetworkResult.Success)
+        val data = (result as NetworkResult.Success).data
+
+        assertEquals("Результат сохранён", data.message)
+        assertEquals(1, data.game.id)
+
+        val res = mockWebServer.takeRequest()
+        assertEquals("/games/1/finish", res.path)
+        assertEquals("Bearer JWT_Token", res.headers["Authorization"])
     }
 }

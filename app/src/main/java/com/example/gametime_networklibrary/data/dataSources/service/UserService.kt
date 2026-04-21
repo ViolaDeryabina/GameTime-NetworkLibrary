@@ -1,28 +1,21 @@
 package com.example.gametime_networklibrary.data.dataSources.service
 
-import com.example.gametime_networklibrary.data.dto.user.UpdateProfileRequest
-import com.example.gametime_networklibrary.data.dto.user.auth.AuthRequest
-import com.example.gametime_networklibrary.data.dto.user.auth.AuthResponse
-import com.example.gametime_networklibrary.data.dto.user.auth.Player
-import com.example.gametime_networklibrary.data.dto.user.registration.RegistrationRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.AuthRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.Logout
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.RegisterRequest
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.RegisterResponse
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface UserService {
-    @POST("collections/players/auth-with-password")
-    suspend fun authorization(@Body authRequest: AuthRequest): AuthResponse
+    @POST("login")
+    suspend fun authorization(@Body authRequest: AuthRequest): RegisterResponse
 
-    @POST("collections/players/records")
-    suspend fun registration(@Body registrationRequest: RegistrationRequest): Player
+    @POST("register")
+    suspend fun registration(@Body registerRequest: RegisterRequest): RegisterResponse
 
-    @GET("collections/players/records/{id}")
-    suspend fun getInformationProfile(@Header("Authorization") token: String, @Path("id") id: String): Player
-
-    @PATCH("collections/players/records/{id}")
-    suspend fun updateProfile(@Header("Authorization") token: String, @Path("id") id: String, @Body updateProfileRequest: UpdateProfileRequest): Player
+    @POST("logout")
+    suspend fun logout(@Header("Authorization") token: String): Logout
 
 }
