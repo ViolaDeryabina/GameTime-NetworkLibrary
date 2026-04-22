@@ -3,9 +3,11 @@ package com.example.gametime_networklibrary.data.dataSources
 import android.util.Log
 import com.example.gametime_networklibrary.data.dataSources.service.GameService
 import com.example.gametime_networklibrary.data.dataSources.service.ProfileService
+import com.example.gametime_networklibrary.data.dataSources.service.StatisticsService
 import com.example.gametime_networklibrary.data.dataSources.service.UserService
 import com.example.gametime_networklibrary.data.repositoryImpl.GameRepositoryImpl
 import com.example.gametime_networklibrary.data.repositoryImpl.ProfileRepositoryImpl
+import com.example.gametime_networklibrary.data.repositoryImpl.StatisticsRepositoryImpl
 import com.example.gametime_networklibrary.data.repositoryImpl.UserRepositoryImpl
 import com.example.gametime_networklibrary.domain.repository.ProfileRepository
 import okhttp3.OkHttpClient
@@ -36,8 +38,11 @@ object NetworkService {
     private val profileService = retrofit.create(ProfileService::class.java)
     private val gameService = retrofit.create(GameService::class.java)
 
+    private  val statService = retrofit.create(StatisticsService::class.java)
+
     val userRepository = UserRepositoryImpl(userService)
     val profileRepository = ProfileRepositoryImpl(profileService)
     val gameRepository = GameRepositoryImpl(gameService)
+    val statRepository = StatisticsRepositoryImpl(statService)
 
 }
