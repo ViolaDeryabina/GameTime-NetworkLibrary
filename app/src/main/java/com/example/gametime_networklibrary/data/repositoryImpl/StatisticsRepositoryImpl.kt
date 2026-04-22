@@ -8,6 +8,6 @@ import com.example.gametime_networklibrary.domain.repository.StatisticsRepositor
 
 class StatisticsRepositoryImpl(private val api: StatisticsService) : StatisticsRepository {
     override suspend fun getStatisticsGame(token: String): NetworkResult<GameData> {
-        return ApiCallAdapter.safeApiCall { api.getStatisticsGame(token) }
+        return ApiCallAdapter.safeApiCall { api.getStatisticsGame("Bearer ${token}") }
     }
 }
