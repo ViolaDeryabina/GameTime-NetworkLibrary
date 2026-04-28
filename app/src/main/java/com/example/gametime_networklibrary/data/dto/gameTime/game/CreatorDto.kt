@@ -1,6 +1,6 @@
 package com.example.gametime_networklibrary.data.dto.gameTime.game
 
-data class Creator(
+data class CreatorDto(
     val id: Int,
     val name: String,
     val email: String,

@@ -2,14 +2,17 @@ package com.example.gametime_networklibrary.data.repositoryImpl
 
 import com.example.gametime_networklibrary.data.dataSources.ApiCallAdapter
 import com.example.gametime_networklibrary.data.dataSources.NetworkResult
+import com.example.gametime_networklibrary.data.dataSources.map
 import com.example.gametime_networklibrary.data.dataSources.service.GameService
 import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameRequest
 import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameResponse
 import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameRequest
 import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameResponse
-import com.example.gametime_networklibrary.data.dto.gameTime.game.Game
+import com.example.gametime_networklibrary.data.dto.gameTime.game.GameDto
 import com.example.gametime_networklibrary.data.dto.gameTime.game.GameList
 import com.example.gametime_networklibrary.data.dto.gameTime.game.LoginGameResponse
+import com.example.gametime_networklibrary.data.mappers.toDomain
+import com.example.gametime_networklibrary.domain.entities.Game
 import com.example.gametime_networklibrary.domain.repository.GameRepository
 import javax.inject.Inject
 
@@ -20,7 +23,7 @@ class GameRepositoryImpl @Inject constructor(private val api: GameService) : Gam
         status: String,
         type: String
     ): NetworkResult<GameList> {
-        return ApiCallAdapter.safeApiCall { api.getListGame("Bearer $token",status,type) }
+        return ApiCallAdapter.safeApiCall { api.getListGame("Bearer $token", status, type) }
     }
 
     override suspend fun createGame(
@@ -36,6 +39,7 @@ class GameRepositoryImpl @Inject constructor(private val api: GameService) : Gam
         id: Int
     ): NetworkResult<Game> {
         return ApiCallAdapter.safeApiCall { api.getInformationGameByiId("Bearer $token", id) }
+            .map { it.toDomain() }
     }
 
     override suspend fun loginGame(
@@ -50,6 +54,12 @@ class GameRepositoryImpl @Inject constructor(private val api: GameService) : Gam
         id: Int,
         finishGameRequest: FinishGameRequest
     ): NetworkResult<FinishGameResponse> {
-        return ApiCallAdapter.safeApiCall { api.safeResultGame("Bearer $token", id,finishGameRequest) }
+        return ApiCallAdapter.safeApiCall {
+            api.safeResultGame(
+                "Bearer $token",
+                id,
+                finishGameRequest
+            )
+        }
     }
 }

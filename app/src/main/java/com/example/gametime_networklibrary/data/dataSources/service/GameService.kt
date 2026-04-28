@@ -4,7 +4,7 @@ import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameRequ
 import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameResponse
 import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameRequest
 import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameResponse
-import com.example.gametime_networklibrary.data.dto.gameTime.game.Game
+import com.example.gametime_networklibrary.data.dto.gameTime.game.GameDto
 import com.example.gametime_networklibrary.data.dto.gameTime.game.GameList
 import com.example.gametime_networklibrary.data.dto.gameTime.game.LoginGameResponse
 import retrofit2.http.Body
@@ -22,7 +22,7 @@ interface GameService {
     suspend fun createGame(@Header("Authorization")token: String, @Body gameRequest: CreateGameRequest): CreateGameResponse
 
     @GET("games/{id}")
-    suspend fun getInformationGameByiId(@Header("Authorization")token: String, @Path("id")id: Int): Game
+    suspend fun getInformationGameByiId(@Header("Authorization")token: String, @Path("id")id: Int): GameDto
 
     @POST("games/{id}/join")
     suspend fun loginGame(@Header("Authorization")token: String,  @Path("id")id: Int): LoginGameResponse

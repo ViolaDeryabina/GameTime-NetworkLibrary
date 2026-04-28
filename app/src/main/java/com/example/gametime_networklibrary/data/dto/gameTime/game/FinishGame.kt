@@ -7,5 +7,5 @@ data class FinishGame(
     val image_url: String,
     val target_avatar_url: String,
     val config: Config?,
-    val players: List<Creator>
+    val players: List<CreatorDto>
 )

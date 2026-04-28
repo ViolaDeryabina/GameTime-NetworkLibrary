@@ -5,9 +5,10 @@ import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameRequ
 import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameResponse
 import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameRequest
 import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameResponse
-import com.example.gametime_networklibrary.data.dto.gameTime.game.Game
+import com.example.gametime_networklibrary.data.dto.gameTime.game.GameDto
 import com.example.gametime_networklibrary.data.dto.gameTime.game.GameList
 import com.example.gametime_networklibrary.data.dto.gameTime.game.LoginGameResponse
+import com.example.gametime_networklibrary.domain.entities.Game
 
 interface GameRepository {
     //suspend fun getListCategory(token: String): NetworkResult<CategoryList>
