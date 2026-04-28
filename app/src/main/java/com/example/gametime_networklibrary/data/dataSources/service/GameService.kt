@@ -15,9 +15,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GameService {
-//    @GET("collections/category/records")
-//    suspend fun getListCategory(@Header("Authorization")token: String): CategoryList
-
     @GET("games")
     suspend fun getListGame(@Header("Authorization")token: String, @Query("status")status: String,@Query("type")type: String,): GameList
 

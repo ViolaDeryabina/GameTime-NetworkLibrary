@@ -7,10 +7,12 @@ import com.example.gametime_networklibrary.data.dto.gameTime.authentication.User
 import com.example.gametime_networklibrary.data.dto.gameTime.profile.UpdateProfile
 import com.example.gametime_networklibrary.data.dto.gameTime.profile.UpdateProfileRequest
 import com.example.gametime_networklibrary.domain.repository.ProfileRepository
+import jakarta.inject.Inject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class ProfileRepositoryImpl(private val api: ProfileService) : ProfileRepository {
+class ProfileRepositoryImpl  @Inject constructor
+    (private val api: ProfileService) : ProfileRepository {
     override suspend fun getProfile(token: String): NetworkResult<User> {
         return ApiCallAdapter.safeApiCall { api.getProfile("Bearer ${token}") }
     }

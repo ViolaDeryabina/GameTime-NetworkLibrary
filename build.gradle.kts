@@ -2,4 +2,6 @@
 plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.ksp.android) apply false
+    alias(libs.plugins.hilt) apply false
 }

@@ -11,11 +11,9 @@ import com.example.gametime_networklibrary.data.dto.gameTime.game.Game
 import com.example.gametime_networklibrary.data.dto.gameTime.game.GameList
 import com.example.gametime_networklibrary.data.dto.gameTime.game.LoginGameResponse
 import com.example.gametime_networklibrary.domain.repository.GameRepository
+import javax.inject.Inject
 
-class GameRepositoryImpl(private val api: GameService) : GameRepository {
-//    override suspend fun getListCategory(token: String): NetworkResult<CategoryList> {
-//        return ApiCallAdapter.safeApiCall { api.getListCategory("Bearer $token") }
-//    }
+class GameRepositoryImpl @Inject constructor(private val api: GameService) : GameRepository {
 
     override suspend fun getListGame(
         token: String,

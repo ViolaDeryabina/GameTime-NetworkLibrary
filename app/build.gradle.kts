@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.apollo)
+    alias(libs.plugins.ksp.android)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -45,7 +47,6 @@ apollo {
         packageName.set("com.example.gametime_networklibrary")
     }
 }
-
 dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.core.ktx)
@@ -56,6 +57,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     api(libs.logging.interceptor)
     implementation(libs.apollo.runtime)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
     testImplementation(libs.core.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.mockwebserver)

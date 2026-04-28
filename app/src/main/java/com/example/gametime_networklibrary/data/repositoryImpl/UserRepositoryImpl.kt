@@ -8,8 +8,9 @@ import com.example.gametime_networklibrary.data.dto.gameTime.authentication.Regi
 import com.example.gametime_networklibrary.data.dto.gameTime.authentication.RegisterResponse
 import com.example.gametime_networklibrary.data.dto.gameTime.authentication.AuthRequest
 import com.example.gametime_networklibrary.domain.repository.UserRepository
+import javax.inject.Inject
 
-class UserRepositoryImpl(private val api: UserService) : UserRepository {
+class UserRepositoryImpl @Inject constructor(private val api: UserService) : UserRepository {
 
     override suspend fun authorization(authRequest: AuthRequest): NetworkResult<RegisterResponse> {
         return ApiCallAdapter.safeApiCall { api.authorization(authRequest) }
