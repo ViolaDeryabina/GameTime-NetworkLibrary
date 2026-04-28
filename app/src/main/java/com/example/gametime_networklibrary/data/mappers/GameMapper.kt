@@ -8,12 +8,12 @@ fun GameDto.toDomain(): Game{
         id = this.id,
         type = this.type,
         status = this.status,
-        maxPlayers = this.max_players,
+        maxPlayers = this.maxPlayers,
         difficulty = this.difficulty,
-        imageUrl = this.image_url,
-        targetAvatarUrl = this.target_avatar_url,
+        imageUrl = this.imageUrl,
+        targetAvatarUrl = this.targetAvatarUrl,
         config = this.config,
-        scheduledAt = this.scheduled_at,
+        scheduledAt = this.scheduledAt,
         creator = this.creator.toDomain(),
         players = this.players.map { it.toDomain()}
     )

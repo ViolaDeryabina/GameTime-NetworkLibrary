@@ -1,22 +1,35 @@
 package com.example.gametime_networklibrary.data.dto.gameTime.game
 
+import com.google.gson.annotations.SerializedName
+
 data class GameDto(
     val id: Int,
     val type: String,
     val status: String,
-    val creator_id: Int,
-    val max_players: Int,
+    @SerializedName("creator_id")
+    val creatorId: Int,
+    @SerializedName("max_players")
+    val maxPlayers: Int,
     val difficulty: Int,
-    val image_url: String,
-    val target_avatar_url: String,
+    @SerializedName("image_url")
+    val imageUrl: String,
+    @SerializedName("target_avatar_url")
+    val targetAvatarUrl: String,
     val config: Config,
-    val winner_id: Int,
-    val winner_time: Int,
-    val scheduled_at: String,
-    val started_at: String,
-    val finished_at: String,
-    val created_at: String,
-    val updated_at: String,
+    @SerializedName("winner_id")
+    val winnerId: Int,
+    @SerializedName("winner_time")
+    val winnerTime: Int,
+    @SerializedName("scheduled_at")
+    val scheduledAt: String,
+    @SerializedName("started_at")
+    val startedAt: String,
+    @SerializedName("finished_at")
+    val finishedAt: String,
+    @SerializedName("created_at")
+    val createdAt: String,
+    @SerializedName("updated_at")
+    val updatedAt: String,
     val creator: CreatorDto,
     val players: List<CreatorDto>
 )

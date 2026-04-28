@@ -9,6 +9,6 @@ fun UserDto.toDomain(): User{
         name = this.name,
         email = this.email,
         avatarUrl = this.avatar,
-        isOnline = this.is_online
+        isOnline = this.isOnline
     )
 }

@@ -8,11 +8,10 @@ import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameRequ
 import com.example.gametime_networklibrary.data.dto.gameTime.game.CreateGameResponse
 import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameRequest
 import com.example.gametime_networklibrary.data.dto.gameTime.game.FinishGameResponse
-import com.example.gametime_networklibrary.data.dto.gameTime.game.GameDto
-import com.example.gametime_networklibrary.data.dto.gameTime.game.GameList
 import com.example.gametime_networklibrary.data.dto.gameTime.game.LoginGameResponse
 import com.example.gametime_networklibrary.data.mappers.toDomain
 import com.example.gametime_networklibrary.domain.entities.Game
+import com.example.gametime_networklibrary.domain.entities.GameList
 import com.example.gametime_networklibrary.domain.repository.GameRepository
 import javax.inject.Inject
 
@@ -24,6 +23,7 @@ class GameRepositoryImpl @Inject constructor(private val api: GameService) : Gam
         type: String
     ): NetworkResult<GameList> {
         return ApiCallAdapter.safeApiCall { api.getListGame("Bearer $token", status, type) }
+            .map { it.toDomain() }
     }
 
     override suspend fun createGame(

@@ -78,7 +78,7 @@ class RegistrationUnitTest {
         val data = (result as NetworkResult.Success).data
         assertEquals("Виолетта", data.user.name)
         assertEquals("violaDer@gmail.com", data.user.email)
-        assertEquals(false, data.user.is_online)
+        assertEquals(false, data.user.isOnline)
 
         val res = mockWebServer.takeRequest()
         assertEquals("/register", res.path)

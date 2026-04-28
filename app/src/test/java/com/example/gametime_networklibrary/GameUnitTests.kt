@@ -98,17 +98,6 @@ class GameUnitTests {
 
         mockWebServer.enqueue(mockResponse)
 
-//        val result = gameRepository.getListGame("JWT_Token", status = "scheduled", type = "image_puzzle")
-//        assertTrue(result is NetworkResult.Success)
-//        val data = (result as NetworkResult.Success).data
-//        assertEquals(1, data.data[0].id)
-//        assertEquals("image_puzzle", data.data[0].type)
-//        assertEquals("scheduled", data.data[0].status)
-//
-//        val res = mockWebServer.takeRequest()
-//        assertEquals("/games", res.path)
-//        assertEquals("Bearer JWT-token", res.headers["Authorization"])
-
     }
 
     @Test
