@@ -1,5 +1,6 @@
 package com.example.gametime_networklibrary.data.dto.gameTime.game
 
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.UserDto
 import com.google.gson.annotations.SerializedName
 
 data class GameDto(
@@ -30,6 +31,6 @@ data class GameDto(
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String,
-    val creator: CreatorDto,
-    val players: List<CreatorDto>
+    val creator: UserDto,
+    val players: List<UserDto>
 )

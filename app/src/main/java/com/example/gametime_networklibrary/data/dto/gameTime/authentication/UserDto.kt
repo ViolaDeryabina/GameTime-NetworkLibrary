@@ -8,11 +8,11 @@ data class UserDto(
     val email: String,
     val avatar: String,
     @SerializedName("email_verified_at")
-    val emailVerifiedAt: String,
+    val emailVerifiedAt: String?,
     @SerializedName("created_at")
-    val createdAt: String,
+    val createdAt: String?,
     @SerializedName("updated_at")
-    val updatedAt: String,
+    val updatedAt: String?,
     @SerializedName("is_online")
     val isOnline: Boolean
 )

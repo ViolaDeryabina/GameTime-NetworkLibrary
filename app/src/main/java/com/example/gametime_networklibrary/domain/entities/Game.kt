@@ -13,6 +13,6 @@ data class Game(
     val targetAvatarUrl: String,
     val config: Config,
     val scheduledAt: String,
-    val creator: Participant,
-    val players: List<Participant>
+    val creator: User,
+    val players: List<User>
 )
