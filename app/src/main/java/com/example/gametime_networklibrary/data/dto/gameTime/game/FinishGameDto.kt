@@ -1,5 +1,6 @@
 package com.example.gametime_networklibrary.data.dto.gameTime.game
 
+import com.example.gametime_networklibrary.data.dto.gameTime.authentication.UserDto
 import com.google.gson.annotations.SerializedName
 
 data class FinishGameDto(
@@ -11,5 +12,5 @@ data class FinishGameDto(
     @SerializedName("target_avatar_url")
     val targetAvatarUrl: String,
     val config: Config?,
-    val players: List<CreatorDto>
+    val players: List<UserDto>
 )

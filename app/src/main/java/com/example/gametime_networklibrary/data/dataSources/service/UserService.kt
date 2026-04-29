@@ -6,12 +6,13 @@ import com.example.gametime_networklibrary.data.dto.gameTime.authentication.Regi
 import com.example.gametime_networklibrary.data.dto.gameTime.authentication.RegisterResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface UserService {
     @POST("login")
     suspend fun authorization(@Body authRequest: AuthRequest): RegisterResponse
-
+    @Headers("accept: application/json")
     @POST("register")
     suspend fun registration(@Body registerRequest: RegisterRequest): RegisterResponse
 
