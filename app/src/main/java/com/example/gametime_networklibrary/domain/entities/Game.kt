@@ -10,7 +10,7 @@ data class Game(
     val maxPlayers: Int,
     val difficulty: Int,
     val imageUrl: String,
-    val targetAvatarUrl: String,
+    val targetAvatarUrl: String?,
     val config: Config,
     val scheduledAt: String,
     val creator: User,

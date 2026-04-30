@@ -10,6 +10,7 @@ import com.example.gametime_networklibrary.data.dto.gameTime.game.LoginGameRespo
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query

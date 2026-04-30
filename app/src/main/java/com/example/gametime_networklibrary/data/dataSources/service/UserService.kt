@@ -10,6 +10,7 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface UserService {
+    @Headers("accept: application/json")
     @POST("login")
     suspend fun authorization(@Body authRequest: AuthRequest): RegisterResponse
     @Headers("accept: application/json")
